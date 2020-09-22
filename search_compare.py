@@ -48,33 +48,31 @@ def binary_search(a_list, item):
 
 def main():
 	from random import randint
-	t_list_500=[]
+	t_list=[]
 	for x in range(0,100):
-		t_list_500.append([])
-		for y in range(0,500):
-			n=randint(1, 200)
-			t_list_500[x].append(n)
-	t_list_1000=[]
-	for x in range(0,100):
-		t_list_1000.append([])
-		for y in range(0,1000):
-			n=randint(1, 200)
-			t_list_1000[x].append(n)
-	t_list_10000=[]
-	for x in range(0,100):
-		t_list_10000.append([])
-		for y in range(0,10000):
-			n=randint(1, 200)
-			t_list_10000[x].append(n)
+		t_list.append([])
+		m=randint(1, 3)
+		if m==1:
+			for y in range(0,500):
+				n=randint(1, 200)
+				t_list[x].append(n)
+		if m==2:
+			for y in range(0,1000):
+				n=randint(1, 200)
+				t_list[x].append(n)
+		else:
+			for y in range(0,10000):
+				n=randint(1, 200)
+				t_list[x].append(n)
 	s_search_counter=[]
 	os_search_counter=[]
 	b_search_counter=[]
 	for a in range(0,100):
-		s_search_counter.append(sequential_search(t_list_500[a], -1)[1])
+		s_search_counter.append(sequential_search(t_list[a], -1)[1])
 	for b in range(0,100):
-		t_list_500[b].sort()
-		os_search_counter.append(ordered_sequential_search(t_list_500[b], -1)[1])
-		b_search_counter.append(binary_search(t_list_500[b], -1)[1])
+		t_list[b].sort()
+		os_search_counter.append(ordered_sequential_search(t_list[b], -1)[1])
+		b_search_counter.append(binary_search(t_list[b], -1)[1])
 	s_search_avg=0
 	for s in s_search_counter:
 		s_search_avg+=s
