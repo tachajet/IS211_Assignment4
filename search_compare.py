@@ -1,20 +1,21 @@
 def sequential_search(a_list, a_item):
-	from timeit import Timer
-	seqsearch_timer=Timer("sequential_search()", "from __main__ import sequential_search")
 	pos = 0
 	a_found = False
+	from time import time
+	seqsearch_timer=time()
 	while pos < len(a_list) and not a_found:
 		if a_list[pos] == a_item:
 			a_found = True
 		else:
 			pos = pos+1
+	seqsearch_timer=(time()-seqsearch_timer)
 	return a_found,seqsearch_timer
 def ordered_sequential_search(b_list, b_item):
 	pos = 0
 	found = False
 	stop = False
-	from timeit import Timer
-	o_seqsearch_timer=Timer("ordered_sequential_search()", "from __main__ import ordered_sequential_search")
+	from time import time
+	o_seqsearch_timer=time()
 	while pos < len(b_list) and not found and not stop:
 		if b_list[pos] == b_item:
 			found = True
@@ -23,13 +24,16 @@ def ordered_sequential_search(b_list, b_item):
 				stop=True
 			else:
 				pos=pos+1
-	return found
+	o_seqsearch_timer=(time()-o_seqsearch_timer)
+	return found,o_seqsearch_timer
 
 
 def binary_search(a_list, item):
 	first = 0
 	last = len(a_list) - 1
 	found = False
+	from time import time
+	b_search_timer=time()
 	while first <= last and not found:
 		midpoint = (first + last) // 2
 		if a_list[midpoint] == item:
@@ -39,14 +43,51 @@ def binary_search(a_list, item):
 				last = midpoint - 1
 			else:
 				first = midpoint + 1
-	return found
+	b_search_timer=(time()-b_search_timer)
+	return found,b_search_timer
 
-test_list = [1, 2, 32, 8, 17, 19, 42, 13, 0]
-print(sequential_search(test_list, 3))
-print(sequential_search(test_list, 13))
-
-b_test_list = [0, 1, 2, 8, 13, 17, 19, 32, 42,]
-print(ordered_sequential_search(b_test_list, 3))
-print(ordered_sequential_search(b_test_list, 13))
-print(binary_search(b_test_list, 3))
-print(binary_search(b_test_list, 13))
+def main():
+	from random import randint
+	t_list_500=[]
+	for x in range(0,100):
+		t_list_500.append([])
+		for y in range(0,500):
+			n=randint(1, 200)
+			t_list_500[x].append(n)
+	t_list_1000=[]
+	for x in range(0,100):
+		t_list_1000.append([])
+		for y in range(0,1000):
+			n=randint(1, 200)
+			t_list_1000[x].append(n)
+	t_list_10000=[]
+	for x in range(0,100):
+		t_list_10000.append([])
+		for y in range(0,10000):
+			n=randint(1, 200)
+			t_list_10000[x].append(n)
+	s_search_counter=[]
+	os_search_counter=[]
+	b_search_counter=[]
+	for a in range(0,100):
+		s_search_counter.append(sequential_search(t_list_500[a], -1)[1])
+	for b in range(0,100):
+		t_list_500[b].sort()
+		os_search_counter.append(ordered_sequential_search(t_list_500[b], -1)[1])
+		b_search_counter.append(binary_search(t_list_500[b], -1)[1])
+	s_search_avg=0
+	for s in s_search_counter:
+		s_search_avg+=s
+	os_search_avg=0
+	for o in os_search_counter:
+		os_search_avg+=o
+	b_search_avg=0
+	for z in b_search_counter:
+		b_search_avg+=z
+	print("Sequential Search took %10.7f seconds to run, on average" % (s_search_avg/100))
+	print("Ordered Sequential Search took %10.7f seconds to run, on average" % (os_search_avg/100))
+	print("Binary Search took %10.7f seconds to run, on average" % (b_search_avg/100))
+	
+		
+if __name__=="__main__":
+	main()
