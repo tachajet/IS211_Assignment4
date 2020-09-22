@@ -1,6 +1,7 @@
 def sequential_search(a_list, a_item):
 	pos = 0
 	a_found = False
+	#needed to use the time module
 	from time import time
 	seqsearch_timer=time()
 	while pos < len(a_list) and not a_found:
@@ -48,6 +49,7 @@ def binary_search(a_list, item):
 
 def main():
 	from random import randint
+	#generating a list that has 100 lists of 500, 1000, and 10000 values
 	t_list=[]
 	for x in range(0,100):
 		t_list.append([])
